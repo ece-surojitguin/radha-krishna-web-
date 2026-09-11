@@ -1,28 +1,47 @@
-const scene = document.querySelector(".scene");
+const scene =
+    document.getElementById("scene");
 
-const playBtn = document.getElementById("playBtn");
-const musicBtn = document.getElementById("musicBtn");
-const replayBtn = document.getElementById("replayBtn");
-const fullscreenBtn = document.getElementById("fullscreenBtn");
+const mainImage =
+    document.getElementById("mainImage");
 
-const music = document.getElementById("music");
-const image = document.getElementById("mainImage");
+const playBtn =
+    document.getElementById("playBtn");
+
+const musicBtn =
+    document.getElementById("musicBtn");
+
+const replayBtn =
+    document.getElementById("replayBtn");
+
+const fullscreenBtn =
+    document.getElementById("fullscreenBtn");
+
+const music =
+    document.getElementById("music");
+
+const musicStatus =
+    document.getElementById("musicStatus");
 
 
-// --------------------------------
-// Create stars
-// --------------------------------
+// =====================================
+// CREATE STARS
+// =====================================
 
-const stars = document.querySelector(".stars");
+const stars =
+    document.getElementById("stars");
 
 for (let i = 0; i < 80; i++) {
 
-    const star = document.createElement("span");
+    const star =
+        document.createElement("span");
 
     star.className = "star";
 
-    star.style.left = Math.random() * 100 + "%";
-    star.style.top = Math.random() * 100 + "%";
+    star.style.left =
+        Math.random() * 100 + "%";
+
+    star.style.top =
+        Math.random() * 100 + "%";
 
     star.style.setProperty(
         "--duration",
@@ -36,17 +55,20 @@ for (let i = 0; i < 80; i++) {
 }
 
 
-// --------------------------------
-// Create golden particles
-// --------------------------------
+// =====================================
+// CREATE PARTICLES
+// =====================================
 
-const particles = document.querySelector(".particles");
+const particles =
+    document.getElementById("particles");
 
 for (let i = 0; i < 35; i++) {
 
-    const particle = document.createElement("span");
+    const particle =
+        document.createElement("span");
 
-    particle.className = "particle";
+    particle.className =
+        "particle";
 
     particle.style.left =
         Math.random() * 100 + "%";
@@ -68,17 +90,20 @@ for (let i = 0; i < 35; i++) {
 }
 
 
-// --------------------------------
-// Create flower petals
-// --------------------------------
+// =====================================
+// CREATE PETALS
+// =====================================
 
-const petals = document.querySelector(".petals");
+const petals =
+    document.getElementById("petals");
 
 for (let i = 0; i < 18; i++) {
 
-    const petal = document.createElement("span");
+    const petal =
+        document.createElement("span");
 
-    petal.className = "petal";
+    petal.className =
+        "petal";
 
     petal.style.left =
         Math.random() * 100 + "%";
@@ -100,131 +125,278 @@ for (let i = 0; i < 18; i++) {
 }
 
 
-// --------------------------------
-// Play / pause animation
-// --------------------------------
+// =====================================
+// ANIMATION PLAY / PAUSE
+// =====================================
 
 let animationPlaying = true;
 
-playBtn.addEventListener("click", () => {
+playBtn.addEventListener(
+    "click",
+    () => {
 
-    animationPlaying = !animationPlaying;
+        animationPlaying =
+            !animationPlaying;
 
-    scene.classList.toggle(
-        "paused",
-        !animationPlaying
-    );
+        if (animationPlaying) {
 
-    playBtn.textContent =
-        animationPlaying ? "❚❚" : "▶";
-});
+            scene.classList.remove(
+                "paused"
+            );
+
+            playBtn.textContent =
+                "❚❚";
+
+            playBtn.setAttribute(
+                "aria-label",
+                "Pause animation"
+            );
+
+        } else {
+
+            scene.classList.add(
+                "paused"
+            );
+
+            playBtn.textContent =
+                "▶";
+
+            playBtn.setAttribute(
+                "aria-label",
+                "Play animation"
+            );
+        }
+    }
+);
 
 
-// --------------------------------
-// Music
-// --------------------------------
+// =====================================
+// MUSIC
+// =====================================
 
 let musicPlaying = false;
 
-musicBtn.addEventListener("click", async () => {
 
-    try {
+// Check if audio can load
 
-        if (!musicPlaying) {
-
-            await music.play();
-
-            musicPlaying = true;
-
-            musicBtn.textContent = "🔊";
-
-        } else {
-
-            music.pause();
-
-            musicPlaying = false;
-
-            musicBtn.textContent = "♫";
-        }
-
-    } catch (error) {
+music.addEventListener(
+    "canplaythrough",
+    () => {
 
         console.log(
-            "Add assets/radha-krishna.mp3 to enable music."
+            "Music file loaded successfully."
         );
 
-        musicBtn.textContent = "♫";
+        musicStatus.textContent =
+            "Music: Ready";
     }
-});
+);
 
 
-// --------------------------------
-// Replay
-// --------------------------------
+// If audio cannot load
 
-replayBtn.addEventListener("click", () => {
+music.addEventListener(
+    "error",
+    () => {
 
-    scene.classList.remove("paused");
+        console.error(
+            "Music could not be loaded."
+        );
 
-    image.style.animation = "none";
+        musicStatus.textContent =
+            "Music: File not found";
 
-    void image.offsetWidth;
+        musicBtn.disabled = true;
 
-    image.style.animation =
-        "divineFloat 6s ease-in-out infinite";
-});
+        musicBtn.style.opacity = "0.5";
+    }
+);
 
 
-// --------------------------------
-// Fullscreen
-// --------------------------------
+// When music starts
 
-fullscreenBtn.addEventListener("click", async () => {
+music.addEventListener(
+    "play",
+    () => {
 
-    try {
+        musicPlaying = true;
 
-        if (!document.fullscreenElement) {
+        musicBtn.textContent =
+            "🔊";
 
-            await document.documentElement.requestFullscreen();
+        musicStatus.textContent =
+            "Music: ON";
+    }
+);
 
-        } else {
 
-            await document.exitFullscreen();
+// When music stops
 
+music.addEventListener(
+    "pause",
+    () => {
+
+        musicPlaying = false;
+
+        musicBtn.textContent =
+            "♫";
+
+        musicStatus.textContent =
+            "Music: OFF";
+    }
+);
+
+
+// Music button
+
+musicBtn.addEventListener(
+    "click",
+    async () => {
+
+        try {
+
+            if (!musicPlaying) {
+
+                /*
+                 IMPORTANT:
+                 This play() happens after
+                 the user's button tap, so
+                 mobile browsers normally
+                 allow it.
+                */
+
+                await music.play();
+
+            } else {
+
+                music.pause();
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Audio playback error:",
+                error
+            );
+
+            musicStatus.textContent =
+                "Tap again to play music";
         }
-
-    } catch (error) {
-
-        console.log("Fullscreen unavailable.");
     }
-});
+);
 
 
-// --------------------------------
-// Mouse parallax
-// --------------------------------
+// =====================================
+// REPLAY
+// =====================================
 
-document.addEventListener("mousemove", (event) => {
+replayBtn.addEventListener(
+    "click",
+    () => {
 
-    if (window.innerWidth < 700) return;
+        scene.classList.remove(
+            "paused"
+        );
 
-    const x =
-        (event.clientX / window.innerWidth - 0.5);
+        animationPlaying = true;
 
-    const y =
-        (event.clientY / window.innerHeight - 0.5);
+        playBtn.textContent =
+            "❚❚";
 
-    image.style.transform =
-        `translate(${x * 12}px, ${y * 12}px) scale(1.01)`;
-});
+        // Restart image animation
+
+        mainImage.style.animation =
+            "none";
+
+        void mainImage.offsetWidth;
+
+        mainImage.style.animation =
+            "divineFloat 6s ease-in-out infinite";
+    }
+);
 
 
-// --------------------------------
-// Reset parallax
-// --------------------------------
+// =====================================
+// FULLSCREEN
+// =====================================
 
-document.addEventListener("mouseleave", () => {
+fullscreenBtn.addEventListener(
+    "click",
+    async () => {
 
-    image.style.transform =
-        "translate(0, 0) scale(1)";
-});
+        try {
+
+            if (!document.fullscreenElement) {
+
+                await document.documentElement
+                    .requestFullscreen();
+
+            } else {
+
+                await document.exitFullscreen();
+            }
+
+        } catch (error) {
+
+            console.log(
+                "Fullscreen unavailable."
+            );
+        }
+    }
+);
+
+
+// =====================================
+// DESKTOP PARALLAX
+// =====================================
+
+document.addEventListener(
+    "mousemove",
+    (event) => {
+
+        if (window.innerWidth < 700)
+            return;
+
+        const x =
+            event.clientX /
+            window.innerWidth -
+            0.5;
+
+        const y =
+            event.clientY /
+            window.innerHeight -
+            0.5;
+
+        mainImage.style.transform =
+            `translate(${x * 10}px, ${y * 10}px)`;
+    }
+);
+
+
+// =====================================
+// RESET PARALLAX
+// =====================================
+
+document.addEventListener(
+    "mouseleave",
+    () => {
+
+        mainImage.style.transform =
+            "translate(0, 0)";
+    }
+);
+
+
+// =====================================
+// PREVENT BROKEN IMAGE EXPERIENCE
+// =====================================
+
+mainImage.addEventListener(
+    "error",
+    () => {
+
+        console.error(
+            "Image not found: assets/radha-krishna.jpg"
+        );
+    }
+);
