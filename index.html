@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
 
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <meta name="theme-color" content="#09051c">
+    <meta name="theme-color" content="#08051c">
 
     <title>Radhe Radhe ✨</title>
 
@@ -15,66 +16,104 @@
 
 <body>
 
-    <main class="scene">
+<main class="scene" id="scene">
 
-        <!-- Animated background -->
-        <div class="stars"></div>
-        <div class="particles"></div>
-        <div class="petals"></div>
+    <!-- Background -->
+    <div class="background-glow"></div>
+    <div class="stars" id="stars"></div>
+    <div class="particles" id="particles"></div>
+    <div class="petals" id="petals"></div>
 
-        <!-- Divine glow -->
-        <div class="divine-glow"></div>
+    <!-- Moon -->
+    <div class="moon"></div>
 
-        <!-- Moon -->
-        <div class="moon"></div>
+    <!-- Decorative light -->
+    <div class="light-rays"></div>
 
-        <!-- Main artwork -->
-        <div class="artwork-container">
-            <img
-                src="assets/radha-krishna.jpg"
-                alt="Radha and Krishna"
-                class="radha-krishna"
-                id="mainImage"
-            >
-        </div>
+    <!-- Main artwork -->
+    <section class="artwork-area">
 
-        <!-- Text -->
-        <section class="title">
-            <h1>राधे राधे</h1>
-            <p>Radhe Radhe</p>
-        </section>
+        <div class="image-glow"></div>
 
-        <!-- Controls -->
-        <div class="controls">
+        <img
+            id="mainImage"
+            class="radha-krishna"
+            src="assets/radha-krishna.jpg"
+            alt="Radha and Krishna"
+        >
 
-            <button id="playBtn" aria-label="Play animation">
-                ▶
-            </button>
+    </section>
 
-            <button id="musicBtn" aria-label="Toggle music">
-                ♫
-            </button>
+    <!-- Text -->
+    <section class="title">
 
-            <button id="replayBtn" aria-label="Replay">
-                ↻
-            </button>
+        <h1>राधे राधे</h1>
 
-            <button id="fullscreenBtn" aria-label="Fullscreen">
-                ⛶
-            </button>
+        <p>Radhe Radhe</p>
 
-        </div>
+    </section>
 
-        <!-- Audio -->
-        <audio
-            id="music"
+
+    <!-- Controls -->
+    <section class="controls">
+
+        <button
+            id="playBtn"
+            aria-label="Pause animation">
+            ❚❚
+        </button>
+
+        <button
+            id="musicBtn"
+            aria-label="Play music">
+            ♫
+        </button>
+
+        <button
+            id="replayBtn"
+            aria-label="Replay animation">
+            ↻
+        </button>
+
+        <button
+            id="fullscreenBtn"
+            aria-label="Fullscreen">
+            ⛶
+        </button>
+
+    </section>
+
+
+    <!-- Music status -->
+    <div class="music-status" id="musicStatus">
+        Music: OFF
+    </div>
+
+
+    <!-- Audio -->
+    <audio
+        id="music"
+        preload="auto"
+        loop>
+
+        <source
             src="assets/radha-krishna.mp3"
-            loop>
-        </audio>
+            type="audio/mpeg">
 
-    </main>
+        Your browser does not support audio.
 
-    <script src="script.js"></script>
+    </audio>
+
+
+    <!-- Bottom message -->
+    <div class="scroll-hint">
+        ✦ Scroll to explore ✦
+    </div>
+
+</main>
+
+
+<script src="script.js"></script>
 
 </body>
 </html>
