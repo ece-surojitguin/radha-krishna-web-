@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#09051c">
+
+    <title>Radhe Radhe ✨</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="scene">
+
+        <!-- Animated background -->
+        <div class="stars"></div>
+        <div class="particles"></div>
+        <div class="petals"></div>
+
+        <!-- Divine glow -->
+        <div class="divine-glow"></div>
+
+        <!-- Moon -->
+        <div class="moon"></div>
+
+        <!-- Main artwork -->
+        <div class="artwork-container">
+            <img
+                src="assets/radha-krishna.jpg"
+                alt="Radha and Krishna"
+                class="radha-krishna"
+                id="mainImage"
+            >
+        </div>
+
+        <!-- Text -->
+        <section class="title">
+            <h1>राधे राधे</h1>
+            <p>Radhe Radhe</p>
+        </section>
+
+        <!-- Controls -->
+        <div class="controls">
+
+            <button id="playBtn" aria-label="Play animation">
+                ▶
+            </button>
+
+            <button id="musicBtn" aria-label="Toggle music">
+                ♫
+            </button>
+
+            <button id="replayBtn" aria-label="Replay">
+                ↻
+            </button>
+
+            <button id="fullscreenBtn" aria-label="Fullscreen">
+                ⛶
+            </button>
+
+        </div>
+
+        <!-- Audio -->
+        <audio
+            id="music"
+            src="assets/radha-krishna.mp3"
+            loop>
+        </audio>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
