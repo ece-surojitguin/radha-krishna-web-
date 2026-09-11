@@ -6,112 +6,263 @@
 
 :root {
     --gold: #ffd76a;
+    --gold-light: #fff0b0;
     --deep-blue: #08051c;
     --purple: #24104b;
 }
 
-html,
-body {
+html {
     width: 100%;
-    height: 100%;
-    overflow: hidden;
+    min-height: 100%;
 }
 
 body {
-    font-family: Georgia, "Times New Roman", serif;
+
+    width: 100%;
+
+    min-height: 100vh;
+
+    overflow-x: hidden;
+
+    /* IMPORTANT:
+       Scrolling is enabled */
+    overflow-y: auto;
+
     background: var(--deep-blue);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 }
+
+
+/* ==================================
+   MAIN SCENE
+================================== */
 
 .scene {
+
     position: relative;
-    width: 100vw;
-    height: 100vh;
+
+    width: 100%;
+
+    /*
+       More than 100vh means the page
+       can actually scroll.
+    */
+    min-height: 120vh;
+
     overflow: hidden;
 
     display: flex;
+
     justify-content: center;
+
     align-items: center;
 
     background:
+
         radial-gradient(
-            circle at center,
+            circle at 50% 40%,
             #49306d 0%,
-            #1d1240 35%,
-            #08051c 75%,
-            #02010a 100%
+            #241343 30%,
+            #100824 60%,
+            #03020b 100%
         );
 }
 
-/* -------------------------
-   Moon
-------------------------- */
 
-.moon {
+/* ==================================
+   BACKGROUND GLOW
+================================== */
+
+.background-glow {
+
     position: absolute;
 
-    width: 130px;
-    height: 130px;
+    width: 100vw;
+    height: 100vh;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(255, 205, 100, 0.15),
+            transparent 65%
+        );
+
+    z-index: 0;
+}
+
+
+/* ==================================
+   MOON
+================================== */
+
+.moon {
+
+    position: absolute;
+
+    width: 120px;
+    height: 120px;
 
     top: 7%;
-    right: 10%;
+    right: 9%;
 
     border-radius: 50%;
 
-    background: radial-gradient(
-        circle at 35% 35%,
-        #fff9d7,
-        #ffeaa3 50%,
-        #dcae4e
-    );
+    background:
+
+        radial-gradient(
+            circle at 35% 35%,
+            #fffde0,
+            #ffe9a0 55%,
+            #dcae4e
+        );
 
     box-shadow:
-        0 0 30px rgba(255, 230, 150, .5),
-        0 0 90px rgba(255, 210, 100, .25);
 
-    animation: moonGlow 4s ease-in-out infinite;
+        0 0 25px rgba(255, 230, 150, .7),
+
+        0 0 80px rgba(255, 210, 100, .35);
+
+    animation:
+
+        moonGlow
+        5s
+        ease-in-out
+        infinite;
+
+    z-index: 2;
 }
 
+
 @keyframes moonGlow {
-    0%, 100% {
+
+    0%,
+    100% {
+
         transform: scale(1);
-        opacity: .85;
+
+        opacity: .8;
     }
 
     50% {
-        transform: scale(1.05);
+
+        transform: scale(1.08);
+
         opacity: 1;
     }
 }
 
-/* -------------------------
-   Divine aura
-------------------------- */
 
-.divine-glow {
+/* ==================================
+   LIGHT RAYS
+================================== */
+
+.light-rays {
+
     position: absolute;
 
-    width: min(70vw, 700px);
-    height: min(70vw, 700px);
+    width: 650px;
+    height: 650px;
 
     border-radius: 50%;
 
-    background: radial-gradient(
-        circle,
-        rgba(255, 215, 100, .42),
-        rgba(255, 180, 50, .12) 40%,
-        transparent 70%
-    );
+    background:
 
-    filter: blur(10px);
+        repeating-conic-gradient(
+            from 0deg,
+            transparent 0deg,
+            rgba(255, 220, 130, .07) 5deg,
+            transparent 10deg
+        );
 
-    animation: aura 5s ease-in-out infinite;
+    filter: blur(5px);
+
+    animation:
+
+        rotateRays
+        35s
+        linear
+        infinite;
 
     z-index: 1;
 }
 
-@keyframes aura {
-    0%, 100% {
-        transform: scale(.95);
+
+@keyframes rotateRays {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* ==================================
+   ARTWORK
+================================== */
+
+.artwork-area {
+
+    position: relative;
+
+    z-index: 6;
+
+    width: min(92vw, 850px);
+
+    height: min(78vh, 850px);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+}
+
+
+/* Glow behind image */
+
+.image-glow {
+
+    position: absolute;
+
+    width: 85%;
+
+    height: 85%;
+
+    border-radius: 50%;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(255, 210, 100, .38),
+            rgba(255, 180, 50, .12),
+            transparent 70%
+        );
+
+    filter: blur(20px);
+
+    animation:
+
+        auraPulse
+        5s
+        ease-in-out
+        infinite;
+}
+
+
+@keyframes auraPulse {
+
+    0%,
+    100% {
+        transform: scale(.92);
         opacity: .65;
     }
 
@@ -121,198 +272,317 @@ body {
     }
 }
 
-/* -------------------------
-   Artwork
-------------------------- */
 
-.artwork-container {
-    position: relative;
-
-    z-index: 5;
-
-    width: min(92vw, 850px);
-    height: min(82vh, 850px);
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    animation: entrance 2s ease forwards;
-}
+/* Main image */
 
 .radha-krishna {
+
+    position: relative;
+
+    z-index: 2;
+
     max-width: 100%;
+
     max-height: 100%;
 
     width: auto;
+
     height: auto;
 
     object-fit: contain;
 
-    border-radius: 20px;
+    border-radius: 18px;
 
     box-shadow:
+
         0 0 30px rgba(255, 215, 100, .45),
+
         0 0 90px rgba(255, 190, 70, .25);
 
+    animation:
+
+        divineFloat
+        6s
+        ease-in-out
+        infinite;
+
     transition:
-        transform .4s ease,
-        filter .4s ease;
 
-    animation: divineFloat 6s ease-in-out infinite;
+        transform .25s ease;
 }
 
-@keyframes entrance {
-    from {
-        opacity: 0;
-        transform: scale(.88);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
 
 @keyframes divineFloat {
-    0%, 100% {
-        transform: translateY(0) scale(1);
+
+    0%,
+    100% {
+
+        transform:
+            translateY(0);
     }
 
     50% {
-        transform: translateY(-8px) scale(1.008);
+
+        transform:
+            translateY(-8px);
     }
 }
 
-/* -------------------------
-   Title
-------------------------- */
+
+/* ==================================
+   TITLE
+================================== */
 
 .title {
+
     position: absolute;
 
-    bottom: 8%;
-
     z-index: 10;
+
+    bottom: 12%;
 
     text-align: center;
 
     pointer-events: none;
 
     text-shadow:
-        0 0 10px rgba(255, 210, 100, .8),
-        0 0 25px rgba(255, 180, 50, .5);
+
+        0 0 10px rgba(255, 210, 100, .9),
+
+        0 0 30px rgba(255, 180, 50, .5);
 }
 
+
 .title h1 {
+
     color: var(--gold);
 
-    font-size: clamp(2rem, 6vw, 4rem);
+    font-size:
+        clamp(
+            2.2rem,
+            6vw,
+            4.5rem
+        );
 
     letter-spacing: 4px;
 
-    animation: textGlow 3s ease-in-out infinite;
+    animation:
+
+        textGlow
+        3s
+        ease-in-out
+        infinite;
 }
+
 
 .title p {
-    margin-top: 4px;
 
-    color: #fff1bd;
+    margin-top: 5px;
 
-    font-size: clamp(.9rem, 2vw, 1.3rem);
+    color: var(--gold-light);
 
-    letter-spacing: 5px;
+    font-size:
+        clamp(
+            1rem,
+            2vw,
+            1.4rem
+        );
+
+    letter-spacing: 6px;
 }
 
+
 @keyframes textGlow {
-    0%, 100% {
+
+    0%,
+    100% {
+
+        opacity: .8;
+
         text-shadow:
-            0 0 8px #ffd76a;
+            0 0 8px var(--gold);
     }
 
     50% {
+
+        opacity: 1;
+
         text-shadow:
-            0 0 15px #ffd76a,
+
+            0 0 15px var(--gold),
+
             0 0 35px #ffb52e;
     }
 }
 
-/* -------------------------
-   Controls
-------------------------- */
+
+/* ==================================
+   CONTROLS
+================================== */
 
 .controls {
+
     position: absolute;
 
-    bottom: 2.5%;
+    bottom: 5%;
+
     left: 50%;
 
-    transform: translateX(-50%);
+    transform:
+        translateX(-50%);
 
     z-index: 20;
 
     display: flex;
+
     gap: 10px;
 
     padding: 9px 13px;
 
     border-radius: 50px;
 
-    background: rgba(10, 5, 30, .55);
+    background:
+        rgba(10, 5, 30, .65);
 
-    border: 1px solid rgba(255, 215, 100, .35);
+    border:
+        1px solid
+        rgba(255, 215, 100, .4);
 
-    backdrop-filter: blur(12px);
+    backdrop-filter:
+        blur(14px);
 }
 
+
 .controls button {
-    width: 42px;
-    height: 42px;
+
+    width: 44px;
+
+    height: 44px;
 
     border-radius: 50%;
 
-    border: 1px solid rgba(255, 215, 100, .4);
+    border:
+        1px solid
+        rgba(255, 215, 100, .45);
 
-    background: rgba(255, 215, 100, .08);
+    background:
+        rgba(255, 215, 100, .08);
 
     color: var(--gold);
 
-    font-size: 18px;
+    font-size: 19px;
 
     cursor: pointer;
 
-    transition: .3s ease;
+    transition:
+        transform .25s ease,
+        background .25s ease;
 }
+
 
 .controls button:hover {
+
     transform: scale(1.12);
 
-    background: rgba(255, 215, 100, .2);
-
-    box-shadow:
-        0 0 15px rgba(255, 215, 100, .5);
+    background:
+        rgba(255, 215, 100, .22);
 }
 
-/* -------------------------
-   Stars
-------------------------- */
+
+.controls button:active {
+
+    transform: scale(.94);
+}
+
+
+/* ==================================
+   MUSIC STATUS
+================================== */
+
+.music-status {
+
+    position: fixed;
+
+    top: 18px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    z-index: 30;
+
+    padding: 7px 14px;
+
+    border-radius: 20px;
+
+    color: var(--gold-light);
+
+    background:
+        rgba(10, 5, 30, .55);
+
+    border:
+        1px solid
+        rgba(255, 215, 100, .25);
+
+    font-size: 13px;
+
+    opacity: .8;
+
+    backdrop-filter: blur(8px);
+}
+
+
+/* ==================================
+   SCROLL HINT
+================================== */
+
+.scroll-hint {
+
+    position: absolute;
+
+    bottom: 1%;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    z-index: 12;
+
+    color:
+        rgba(255, 230, 160, .55);
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+}
+
+
+/* ==================================
+   STARS
+================================== */
 
 .stars,
 .particles,
 .petals {
+
     position: absolute;
 
     inset: 0;
 
     pointer-events: none;
 
-    z-index: 2;
+    z-index: 3;
 }
 
+
 .star {
+
     position: absolute;
 
     width: 3px;
+
     height: 3px;
 
     border-radius: 50%;
@@ -323,13 +593,18 @@ body {
         0 0 8px white;
 
     animation:
-        twinkle var(--duration)
-        ease-in-out infinite;
+        twinkle
+        var(--duration)
+        ease-in-out
+        infinite;
 }
 
+
 @keyframes twinkle {
-    0%, 100% {
-        opacity: .2;
+
+    0%,
+    100% {
+        opacity: .15;
     }
 
     50% {
@@ -338,14 +613,17 @@ body {
     }
 }
 
-/* -------------------------
-   Floating particles
-------------------------- */
+
+/* ==================================
+   GOLDEN PARTICLES
+================================== */
 
 .particle {
+
     position: absolute;
 
     width: 5px;
+
     height: 5px;
 
     border-radius: 50%;
@@ -356,16 +634,21 @@ body {
         0 0 10px #ffd76a;
 
     animation:
-        floatUp var(--duration)
-        linear infinite;
+        floatUp
+        var(--duration)
+        linear
+        infinite;
 }
+
 
 @keyframes floatUp {
 
     from {
+
         transform:
             translateY(110vh)
             translateX(0);
+
         opacity: 0;
     }
 
@@ -378,113 +661,175 @@ body {
     }
 
     to {
+
         transform:
             translateY(-20vh)
             translateX(var(--drift));
+
         opacity: 0;
     }
 }
 
-/* -------------------------
-   Flower petals
-------------------------- */
+
+/* ==================================
+   PETALS
+================================== */
 
 .petal {
+
     position: absolute;
 
     width: 10px;
+
     height: 15px;
 
-    border-radius: 70% 30% 70% 30%;
+    border-radius:
+        70% 30% 70% 30%;
 
-    background: #f5c6d6;
+    background:
+        #f2b6ca;
 
     opacity: .7;
 
     animation:
-        falling var(--duration)
-        linear infinite;
+        falling
+        var(--duration)
+        linear
+        infinite;
 }
+
 
 @keyframes falling {
 
     from {
+
         transform:
             translateY(-10vh)
             rotate(0deg);
     }
 
     to {
+
         transform:
-            translateY(110vh)
+            translateY(120vh)
             translateX(var(--drift))
             rotate(720deg);
     }
 }
 
-/* -------------------------
-   Pause animation
-------------------------- */
+
+/* ==================================
+   PAUSED
+================================== */
 
 .scene.paused * {
-    animation-play-state: paused !important;
+
+    animation-play-state:
+        paused !important;
 }
 
-/* -------------------------
-   Mobile
-------------------------- */
+
+/* ==================================
+   MOBILE
+================================== */
 
 @media (max-width: 600px) {
 
+    .scene {
+
+        min-height: 115vh;
+    }
+
+
     .moon {
-        width: 75px;
-        height: 75px;
+
+        width: 70px;
+
+        height: 70px;
 
         top: 5%;
+
         right: 7%;
     }
 
-    .artwork-container {
+
+    .artwork-area {
+
         width: 96vw;
-        height: 76vh;
+
+        height: 72vh;
     }
 
+
     .radha-krishna {
+
         max-width: 96vw;
-        max-height: 76vh;
+
+        max-height: 72vh;
 
         border-radius: 12px;
     }
 
+
     .title {
-        bottom: 11%;
+
+        bottom: 13%;
     }
+
 
     .title h1 {
-        font-size: 2rem;
+
+        font-size: 2.1rem;
     }
+
+
+    .title p {
+
+        font-size: .9rem;
+
+        letter-spacing: 4px;
+    }
+
 
     .controls {
-        bottom: 2%;
+
+        bottom: 5%;
+
+        gap: 7px;
     }
 
+
     .controls button {
-        width: 38px;
-        height: 38px;
+
+        width: 39px;
+
+        height: 39px;
+
+        font-size: 17px;
+    }
+
+
+    .scroll-hint {
+
+        display: none;
     }
 }
 
-/* -------------------------
-   Reduced motion
-------------------------- */
+
+/* ==================================
+   REDUCED MOTION
+================================== */
 
 @media (prefers-reduced-motion: reduce) {
 
     *,
     *::before,
     *::after {
+
         animation-duration: .01ms !important;
+
         animation-iteration-count: 1 !important;
+
         transition: none !important;
     }
-          }
+    }
